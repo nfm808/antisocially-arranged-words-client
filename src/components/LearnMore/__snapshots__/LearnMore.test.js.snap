@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LearnMore /> renders without crashing 1`] = `
+<section
+  className="LearnMore"
+>
+  <h2
+    className="LearnMore--head"
+  >
+    Play an online adaptation of Cards Against Humanity®️
+  </h2>
+  <ContextConsumer>
+    <Component />
+  </ContextConsumer>
+</section>
+`;
