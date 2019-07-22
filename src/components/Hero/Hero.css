@@ -1,0 +1,11 @@
+.Hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.Hero--text {
+  padding: 20px;
+}
