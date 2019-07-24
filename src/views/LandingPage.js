@@ -7,10 +7,6 @@ export default function LandingPage() {
 
   return (
     <main className='LandingPage'>
-      {/* <Hero 
-        heading='Antisocially Arranged Words'
-        subHeading='Bringing the horrible coffee table game across the web.'
-      />  */}
       <h1>Antisocially Arranged Words</h1>
       <h3>Dragging the horrible coffee table game across the web.</h3>
       <Nav 
