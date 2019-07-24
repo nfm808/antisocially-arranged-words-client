@@ -22,6 +22,7 @@ class CreateGame extends Component {
     this.setState({
       name: fieldValue
     }, this.validateName(fieldValue))
+    
   }
 
   handleUpdatePassword = (fieldValue) => {
@@ -43,13 +44,17 @@ class CreateGame extends Component {
     if (string.length < 3) {
       err = 'Name must be longer than 3 characters'
       valid = !valid
-    };
+    } 
+    if (this.state.nameValid) {
+      err = ''
+      valid = false
+    }
     this.setState({
       nameValid: !valid,
       errorMessages: {
         name: err
       }
-    }, this.validateForm())
+    })
   };
   validatePassword = (str) => {
     let string = str.toString();
@@ -58,38 +63,30 @@ class CreateGame extends Component {
     if (string.length < 6) {
       err = 'Name must be longer than 6 characters'
       valid = !valid
-    };
+    }
+
     this.setState({
       passwordValid: !valid,
       errorMessages: {
         password: err
       }
-    }, this.validateForm())
+    })
   }
   validateRepeatPassword = (str) => {
-    let string = str.toString();
     let err = 'Yay! You are free of typos';
     let valid = false;
-    if (string !== this.state.password) {
+    if (str !== this.state.password) {
       err = 'You may have issues with typing...'
       valid = !valid
-    };
+    }
     this.setState({
       repeatPasswordValid: !valid,
       errorMessages: {
         repeatPassword: err
       }
-    }, this.validateForm())
+    })
   }
 
-  validateForm = () => {
-    const { nameValid, passwordValid, repeatPasswordValid} = this.state;
-    if (nameValid && passwordValid && repeatPasswordValid) {
-      this.setState({
-        formValid: !this.state.formValid,
-      })
-    }
-  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -97,9 +94,11 @@ class CreateGame extends Component {
 
   render() {
     const {
-      nameValid, passwordValid, repeatPasswordValid, 
-      formValid, errorMessages
+      nameValid, passwordValid, 
+      repeatPasswordValid, errorMessages
     } = this.state
+    const errors = (nameValid && passwordValid && repeatPasswordValid) 
+                  ? true :false
     return (
       <main className="CreateGame">
         <form 
@@ -128,7 +127,7 @@ class CreateGame extends Component {
             <label htmlFor="CreateGame--password">Password: </label>
             <input 
               className={!passwordValid ? 'red' : 'green'}
-              type="text" 
+              type="password" 
               name="CreateGame--password" 
               id="CreateGame--password"
               onChange={(e) => this.handleUpdatePassword(e.target.value)} 
@@ -142,13 +141,13 @@ class CreateGame extends Component {
             <label htmlFor="CreateGame--repeatPassword">Repeat Password: </label>
             <input 
               className={!repeatPasswordValid ? 'red' : 'green'}
-              type="text" 
+              type="password" 
               name="CreateGame--repeatPassword" 
               id="CreateGame--repeatPassword"
               onChange={(e) => this.handleUpdateRepeatPassword(e.target.value)} 
             />
           </section>
-          <button type="submit" disabled={!formValid}>Create Game</button>
+          <button type="submit" disabled={!errors}>Create Game</button>
         </form>
       </main>
     )
