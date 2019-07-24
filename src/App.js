@@ -6,6 +6,7 @@ import GameRoom from './views/GameRoom.js';
 import LandingPage from './views/LandingPage.js';
 import CahContext from './cahContext';
 import Error404 from './components/Error404/Error404';
+import Rules from './views/Rules.js';
 
 class App extends Component {
   state = {
@@ -38,6 +39,10 @@ class App extends Component {
             exact
             path='/'
             component={LandingPage}
+          />
+          <Route 
+            path='/rules'
+            component={Rules}
           />
           <Route 
             path='/games/:roomId'
