@@ -5,3 +5,28 @@
 .red {
   border: 2px solid lightcoral;
 }
+
+.CreateGame {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.CreateGame--form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.form--group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.CreateGame--input {
+  width: 98%;
+}

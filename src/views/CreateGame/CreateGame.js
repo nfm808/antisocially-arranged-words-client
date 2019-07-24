@@ -101,54 +101,56 @@ class CreateGame extends Component {
                   ? true :false
     return (
       <main className="CreateGame">
+        <header className="CreateGame--header BlackCard">
+          <h3>Create a Game</h3>
+        </header>
         <form 
-          onSubmit={this.handleSubmit} 
           className="CreateGame--form"
         >
-          <section className="form--section">
-            <ValidationMessage 
-              hasError={!nameValid}
-              message={errorMessages.name}
-            />
-            <label htmlFor="CreateGame-name">Game Name: </label>
+          <section className="form--group WhiteCard">
+            <label htmlFor="CreateGame--name">Game Name</label>
             <input 
-              className={!nameValid ? 'red' : 'green'}
+              className={!nameValid ? 'red CreateGame--input' : 'green CreateGame--input'}
               type="text"
               name="CreateGame--name" 
               id="CreateGame--name"
               onChange={(e) => this.handleUpdateName(e.target.value)}
             />
-          </section>
-          <section className="form--group">
             <ValidationMessage 
-                hasError={!passwordValid}
-                message={errorMessages.password}
+              hasError={!nameValid}
+              message={errorMessages.name}
             />
-            <label htmlFor="CreateGame--password">Password: </label>
+          </section>
+          <section className="form--group WhiteCard">
+            <label htmlFor="CreateGame--password">Password</label>
             <input 
-              className={!passwordValid ? 'red' : 'green'}
+              className={!passwordValid ? 'red CreateGame--input' : 'green CreateGame--input'}
               type="password" 
               name="CreateGame--password" 
               id="CreateGame--password"
               onChange={(e) => this.handleUpdatePassword(e.target.value)} 
             />
-          </section>
-          <section className="form--group">
             <ValidationMessage 
-                  hasError={!repeatPasswordValid}
-                  message={errorMessages.repeatPassword}
+              hasError={!passwordValid}
+              message={errorMessages.password}
             />
-            <label htmlFor="CreateGame--repeatPassword">Repeat Password: </label>
+          </section>
+          <section className="form--group WhiteCard">
+            <label htmlFor="CreateGame--repeatPassword">Repeat Password</label>
             <input 
-              className={!repeatPasswordValid ? 'red' : 'green'}
+              className={!repeatPasswordValid ? 'red CreateGame--input' : 'green CreateGame--input'}
               type="password" 
               name="CreateGame--repeatPassword" 
               id="CreateGame--repeatPassword"
               onChange={(e) => this.handleUpdateRepeatPassword(e.target.value)} 
             />
+            <ValidationMessage 
+              hasError={!repeatPasswordValid}
+              message={errorMessages.repeatPassword}
+            />
           </section>
-          <button type="submit" disabled={!errors}>Create Game</button>
         </form>
+        <button type="submit" onClick={(e) => this.handleSubmit(e)} disabled={!errors}>Create Game</button>
       </main>
     )
   }
