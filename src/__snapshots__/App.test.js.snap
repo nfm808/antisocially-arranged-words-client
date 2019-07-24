@@ -1,12 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<App /> renders without error 1`] = `
-<div
-  className="App"
+<ContextProvider
+  value={
+    Object {
+      "answerChoices": Array [],
+      "blackCards": undefined,
+      "currentBlackCard": Object {},
+      "currentHand": Array [],
+      "updateCurrentHand": undefined,
+      "updateUsedCards": undefined,
+      "usedCards": Object {
+        "blackCards": Array [],
+        "whiteCards": Array [],
+      },
+      "whiteCards": undefined,
+      "winningAnswer": Array [],
+    }
+  }
 >
-  <Route
-    component={[Function]}
-    path="/:roomId"
-  />
-</div>
+  <div
+    className="App"
+  >
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/"
+    />
+    <Route
+      component={[Function]}
+      path="/:roomId"
+    />
+  </div>
+</ContextProvider>
 `;

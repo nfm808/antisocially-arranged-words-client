@@ -1,9 +1,13 @@
 import React from 'react'
 
-const cahContext = React.createContext({
+const CahContext = React.createContext({
   blackCards: [],
   whiteCards: [],
-  usedCards: [],
+  usedCards: {
+    blackCards: [],
+    whiteCards: []
+  },
+  currentBlackCard: {},
   currentHand: [],
   answerChoices: [],
   winningAnswer: [],
@@ -11,4 +15,4 @@ const cahContext = React.createContext({
   updateCurrentHand: () => {},
 })
 
-export default cahContext;
+export default CahContext;

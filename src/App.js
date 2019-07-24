@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
 import CARDS from './CARDS.js'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import './App.css'
 import GameRoom from './views/GameRoom.js';
 import LandingPage from './views/LandingPage.js';
-import cahContext from './cahContext';
+import CahContext from './cahContext';
+import Error404 from './components/Error404/Error404';
 
 class App extends Component {
   state = {
-    blackCards: [],
-    whiteCards: [],
-    usedCards: [],
-    currentBlackCard: null,
+    blackCards: undefined,
+    whiteCards: undefined,
+    usedCards: {
+      blackCards: [],
+      whiteCards: []
+    },
+    currentHand: [],
+    answerChoices: [],
+    winningAnswer: [],
+    currentBlackCard: {},
     whiteCardChoices: [],
   }
 
@@ -19,29 +26,47 @@ class App extends Component {
     setTimeout(() => {
       this.setState({
         blackCards: CARDS.blackCards,
-        whiteCards: CARDS.whiteCards
+        whiteCards: CARDS.whiteCards,
       })
     }, 1000);
   }
   renderViewRoutes() {
     return (
       <>
-        <Route 
-          exact
-          path='/'
-          component={LandingPage}
-        />
-        <Route 
-          path='/:roomId'
-          component={GameRoom}
-        />
+        <Switch>
+          <Route 
+            exact
+            path='/'
+            component={LandingPage}
+          />
+          <Route 
+            path='/games/:roomId'
+            component={GameRoom}
+          />
+          <Route 
+            component={Error404}
+          />
+        </Switch>
       </>
     )}
   render() {
+    const contextValue = {
+      blackCards: this.state.blackCards,
+      whiteCards: this.state.whiteCards,
+      usedCards: this.state.usedCards,
+      currentBlackCard: this.state.currentBlackCard,
+      currentHand: this.state.currentHand,
+      answerChoices: this.state.answerChoices,
+      winningAnswer: this.state.winningAnswer,
+      updateUsedCards: this.updateUsedCards,
+      updateCurrentHand: this.updateCurrentHand
+    }
     return (
+      <CahContext.Provider value={contextValue}>
       <div className='App'>
         {this.renderViewRoutes()}
       </div>
+      </CahContext.Provider>
     )
   }
 }
