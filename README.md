@@ -1,4 +1,9 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Antisocially Arranged Words
+
+Dragging the horrible coffee table game across the web. The React client for a full-stack (React, Node.js, Express.js, PostGreSQL) version of Cards Against Humanity:registered: for friends to play the game even when separated by time zones.  
+
+Special thanks to those scumbags over there for releasing the game as Creative Commons!
+
 
 ## Available Scripts
 
