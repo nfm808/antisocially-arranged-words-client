@@ -4,5 +4,6 @@
   flex-direction: column;
   align-content: center;
   justify-content: center;
+  overflow-y: hidden;
   padding-top: 2vh;
 }

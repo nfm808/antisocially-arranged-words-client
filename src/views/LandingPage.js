@@ -1,6 +1,4 @@
 import React from 'react'
-import Hero from '../components/Hero/Hero';
-import { Link } from 'react-router-dom';
 import LearnMore from '../components/LearnMore/LearnMore';
 import './LandingPage.css';
 import Nav from '../components/Nav/Nav';
@@ -8,7 +6,7 @@ import Nav from '../components/Nav/Nav';
 export default function LandingPage() {
 
   return (
-    <section className='LandingPage'>
+    <main className='LandingPage'>
       {/* <Hero 
         heading='Antisocially Arranged Words'
         subHeading='Bringing the horrible coffee table game across the web.'
@@ -22,6 +20,6 @@ export default function LandingPage() {
         ]}  
       />
       <LearnMore />     
-    </section>
+    </main>
   )
 }

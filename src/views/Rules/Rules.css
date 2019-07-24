@@ -11,7 +11,7 @@
 .Rules--list {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-evenly; 
   line-height: 5vh;
   padding-right: 4px;
 }
