@@ -1,0 +1,17 @@
+.Rules--heading {
+  width: 100vw;
+}
+
+.Rules--content {
+  background-color: #F2F2F2;
+  height: auto;
+  width: 100vw;
+}
+
+.Rules--list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  line-height: 5vh;
+  padding-right: 4px;
+}
