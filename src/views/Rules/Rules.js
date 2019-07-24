@@ -47,9 +47,6 @@ export default function Rules() {
           <li>The digitalized form of the cards was awesomely put together for reuse under the effort of <a href="https://crhallberg.com/cah" target="_blank" rel="noopener noreferrer">Chris Hallberg: JSON Against Humanity</a> and others.</li>
         </ul>
       </section>
-
-
-
     </main>
     </>
   )
