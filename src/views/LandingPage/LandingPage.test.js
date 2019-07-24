@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import GameRoom from '../GameRoom';
+import LandingPage from './LandingPage';
 
-describe('<GameRoom />', () => {
+describe('<LandingPage />', () => {
   it('renders without crashing', () => {
-    const wrapper = shallow(<GameRoom />);
+    const wrapper = shallow(<LandingPage />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 })

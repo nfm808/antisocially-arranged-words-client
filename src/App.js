@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import CARDS from './CARDS.js'
 import { Route, Switch } from 'react-router-dom'
 import './App.css'
-import GameRoom from './views/GameRoom.js';
-import LandingPage from './views/LandingPage.js';
+import GameRoom from './views/GameRoom/GameRoom';
+import LandingPage from './views/LandingPage/LandingPage';
 import CahContext from './cahContext';
 import Error404 from './components/Error404/Error404';
 import Rules from './views/Rules/Rules.js';
+import CreateGame from './views/CreateGame/CreateGame';
 
 class App extends Component {
   state = {
@@ -40,9 +41,14 @@ class App extends Component {
             path='/'
             component={LandingPage}
           />
-          <Route 
+          <Route
+            exact
             path='/rules'
             component={Rules}
+          />
+          <Route 
+            path='/create-game'
+            component={CreateGame}
           />
           <Route 
             path='/games/:roomId'
