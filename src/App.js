@@ -47,6 +47,7 @@ class App extends Component {
             component={Rules}
           />
           <Route 
+            exact
             path='/create-game'
             component={CreateGame}
           />
