@@ -5,9 +5,9 @@ import './Nav.css';
 export default function Nav(props) {
 
   return (
-    <nav>
+    <nav className="Nav">
       {props.links.map((item, i) => 
-        <Link key={i} to={`/${item.to}`}>{item.name}</Link> 
+        <Link className="Nav--link" key={i} to={`/${item.to}`}>{item.name}</Link> 
       )}
     </nav>
   )
