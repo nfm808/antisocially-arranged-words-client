@@ -1,0 +1,16 @@
+.BlackCard {
+  width: 120px;
+  height: 180px;
+  background: black;
+  border-radius: 5px;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s;
+  will-change: transform;
+  color: white;
+  margin: 0 auto;
+}
+
+.BlackCard--text {
+  padding: 5px;
+  text-align: left;
+}

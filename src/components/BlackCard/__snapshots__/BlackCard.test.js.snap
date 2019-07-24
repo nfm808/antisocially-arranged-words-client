@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BlackCard /> renders without crashing 1`] = `
+<ForwardRef
+  className="BlackCard"
+  onMouseLeave={[Function]}
+  onMouseMove={[Function]}
+  style={
+    Object {
+      "transform": AnimatedInterpolation {
+        "attach": [Function],
+        "calc": [Function],
+        "children": Array [],
+        "detach": [Function],
+        "payload": Array [
+          AnimatedValue {
+            "animatedStyles": Set {},
+            "children": Array [],
+            "done": false,
+            "lastPosition": 0,
+            "lastTime": undefined,
+            "lastVelocity": undefined,
+            "payload": undefined,
+            "setValue": [Function],
+            "startPosition": 0,
+            "startTime": 1563788444582,
+            "value": 0,
+          },
+          AnimatedValue {
+            "animatedStyles": Set {},
+            "children": Array [],
+            "done": false,
+            "lastPosition": 0,
+            "lastTime": undefined,
+            "lastVelocity": undefined,
+            "payload": undefined,
+            "setValue": [Function],
+            "startPosition": 0,
+            "startTime": 1563788444582,
+            "value": 0,
+          },
+          AnimatedValue {
+            "animatedStyles": Set {},
+            "children": Array [],
+            "done": false,
+            "lastPosition": 1,
+            "lastTime": undefined,
+            "lastVelocity": undefined,
+            "payload": undefined,
+            "setValue": [Function],
+            "startPosition": 1,
+            "startTime": 1563788444582,
+            "value": 1,
+          },
+        ],
+      },
+    }
+  }
+>
+  <h5
+    className="BlackCard--text"
+  >
+    test card text
+  </h5>
+</ForwardRef>
+`;

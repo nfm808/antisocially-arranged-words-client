@@ -1,0 +1,11 @@
+.Hand {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: auto;
+  width: 100vw;
+  overflow-y: hidden; 
+  margin-top: 10px;
+  padding: 15px;
+}
