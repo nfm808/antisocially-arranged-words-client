@@ -11,8 +11,8 @@ import CreateGame from './views/CreateGame/CreateGame';
 
 class App extends Component {
   state = {
-    blackCards: undefined,
-    whiteCards: undefined,
+    blackCards: false,
+    whiteCards: false,
     usedCards: {
       blackCards: [],
       whiteCards: []
@@ -52,7 +52,7 @@ class App extends Component {
             component={CreateGame}
           />
           <Route 
-            path='/games/:roomId'
+            path='/game/:roomId'
             component={GameRoom}
           />
           <Route 

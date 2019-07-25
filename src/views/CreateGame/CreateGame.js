@@ -90,6 +90,9 @@ class CreateGame extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    const availableRooms = ['123', '456', '789']
+    const mockRoom = availableRooms[Math.floor(Math.random() * availableRooms.length)]
+    this.props.history.push(`/game/${mockRoom}`)
   }
 
   render() {
@@ -150,7 +153,13 @@ class CreateGame extends Component {
             />
           </section>
         </form>
-        <button type="submit" onClick={(e) => this.handleSubmit(e)} disabled={!errors}>Create Game</button>
+        <button 
+          type="submit"  
+          onClick={(e) => this.handleSubmit(e)} 
+          disabled={!errors}
+        >
+          Create Game
+        </button>
       </main>
     )
   }

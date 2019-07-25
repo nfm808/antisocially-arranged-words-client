@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import LearnMore from './LearnMore';
+import CardDemo from './CardDemo';
 
-describe('<LearnMore />', () => {
+describe('<CardDemo />', () => {
   it('renders without crashing', () => {
-    const wrapper = shallow(<LearnMore />);
+    const wrapper = shallow(<CardDemo />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 })

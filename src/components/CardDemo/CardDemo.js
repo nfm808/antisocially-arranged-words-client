@@ -3,12 +3,12 @@ import CahContext from '../../cahContext';
 import { pickRandomCards } from '../../cahHelper';
 import BlackCard from '../BlackCard/BlackCard';
 import Hand from '../Hand/Hand';
-import './LearnMore.css';
+import './CardDemo.css';
 
 
-export default function LearnMore() {
+export default function CardDemo() {
   return (
-    <section className="LearnMore">
+    <section className="CardDemo">
       <CahContext.Consumer>
         { ({whiteCards, blackCards}) => 
             ( !whiteCards || !blackCards) ? null

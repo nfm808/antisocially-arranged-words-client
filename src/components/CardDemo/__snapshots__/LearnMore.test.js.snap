@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<LearnMore /> renders without crashing 1`] = `
+exports[`<CardDemo /> renders without crashing 1`] = `
 <section
-  className="LearnMore"
+  className="CardDemo"
 >
   <h2
-    className="LearnMore--head"
+    className="CardDemo--head"
   >
     Play an online adaptation of Cards Against Humanity®️
   </h2>

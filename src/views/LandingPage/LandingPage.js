@@ -1,5 +1,5 @@
 import React from 'react'
-import LearnMore from '../../components/LearnMore/LearnMore';
+import CardDemo from '../../components/CardDemo/CardDemo';
 import './LandingPage.css';
 import Nav from '../../components/Nav/Nav';
 
@@ -15,7 +15,7 @@ export default function LandingPage() {
           {to: 'rules', name: 'Rules and Such'}
         ]}  
       />
-      <LearnMore />     
+      <CardDemo />     
     </main>
   )
 }
