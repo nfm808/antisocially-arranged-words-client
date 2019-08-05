@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import CARDS from './CARDS.js'
 import { Route, Switch } from 'react-router-dom'
 import './App.css'
 import GameRoom from './views/GameRoom/GameRoom';
@@ -11,6 +10,7 @@ import CreateGame from './views/CreateGame/CreateGame';
 
 class App extends Component {
   state = {
+    isLocal: !localStorage.getItem("decks") ? false : true,
     blackCards: false,
     whiteCards: false,
     usedCards: {
@@ -25,12 +25,32 @@ class App extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
+    if (!this.state.isLocal) {
+      const url = `${process.env.REACT_APP_API_BASE_URL}/cards`
+      fetch(url)
+        .then(res => {
+          if(!res.ok) {
+            throw new Error(`mistakes were made`)
+          }
+          return res;
+        })
+        .then(res => res.json())
+        .then(data => {
+          localStorage.setItem("decks", "true");
+          localStorage.setItem("blackCards", JSON.stringify(data[0].black_cards))
+          localStorage.setItem("whiteCards", JSON.stringify(data[0].white_cards))
+          this.setState({
+            blackCards: data[0].black_cards,
+            whiteCards: data[0].white_cards
+          })
+        })
+        .catch(err => console.log(err.message))
+    } else {
       this.setState({
-        blackCards: CARDS.blackCards,
-        whiteCards: CARDS.whiteCards,
+        blackCards: JSON.parse(localStorage.getItem("blackCards")),
+        whiteCards: JSON.parse(localStorage.getItem("whiteCards"))
       })
-    }, 1000);
+    }
   }
   renderViewRoutes() {
     return (

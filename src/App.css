@@ -1,7 +1,9 @@
 * {
   box-sizing: border-box;
 }
-
+input {
+  width: 98%;
+}
 li {
   list-style-type: none;
 }

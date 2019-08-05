@@ -17,6 +17,10 @@ class Login extends Component {
     const { errorMessages, userValid} = this.state
     return (
       <main className="Login">
+        <ValidationMessage 
+          hasError={!userValid}
+          message={errorMessages.password}
+        />
         <form className="Login--form">
           <section className="form--group WhiteCard">
               <label htmlFor="Login--name">User Name</label>
@@ -34,11 +38,9 @@ class Login extends Component {
                 id="Login--password"
               />
             </section>
-            <ValidationMessage 
-                hasError={!userValid}
-                message={errorMessages.password}
-            />
           </form>
+          <button type="submit" onClick={() => this.handleSubmit()} >Log In</button>
+          <p>Or Register <button type="button" onClick={() => this.props.history.push} >Here</button></p>
       </main>
     )
   }
