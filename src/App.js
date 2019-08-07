@@ -7,21 +7,13 @@ import CahContext from './cahContext';
 import Error404 from './components/Error404/Error404';
 import Rules from './views/Rules/Rules.js';
 import CreateGame from './views/CreateGame/CreateGame';
+import Game from './components/Game/Game';
 
 class App extends Component {
   state = {
     isLocal: !localStorage.getItem("decks") ? false : true,
     blackCards: false,
     whiteCards: false,
-    usedCards: {
-      blackCards: [],
-      whiteCards: []
-    },
-    currentHand: [],
-    answerChoices: [],
-    winningAnswer: [],
-    currentBlackCard: {},
-    whiteCardChoices: [],
   }
 
   componentDidMount() {
@@ -72,8 +64,14 @@ class App extends Component {
             component={CreateGame}
           />
           <Route 
+            exact
             path='/game/:roomId'
             component={GameRoom}
+          />
+          <Route
+            exact
+            path='/game/:roomId/:user'
+            component={Game}
           />
           <Route 
             component={Error404}
@@ -85,13 +83,6 @@ class App extends Component {
     const contextValue = {
       blackCards: this.state.blackCards,
       whiteCards: this.state.whiteCards,
-      usedCards: this.state.usedCards,
-      currentBlackCard: this.state.currentBlackCard,
-      currentHand: this.state.currentHand,
-      answerChoices: this.state.answerChoices,
-      winningAnswer: this.state.winningAnswer,
-      updateUsedCards: this.updateUsedCards,
-      updateCurrentHand: this.updateCurrentHand
     }
     return (
       <CahContext.Provider value={contextValue}>

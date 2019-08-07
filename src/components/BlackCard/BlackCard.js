@@ -15,6 +15,7 @@ export default function BlackCard(props) {
           onMouseLeave={() => set({ xys: [0, 0, 1] })}
           style={{ transform: prop.xys.interpolate(trans) }}>
           <h5 className="BlackCard--text">{props.card.text}</h5>
+          <p>{props.card.playerName && props.card.playerName}</p>
         </animated.div>
   )
 }

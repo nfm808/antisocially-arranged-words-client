@@ -1,43 +1,42 @@
 import React, { Component } from 'react';
 import './GameRoom.css';
-import CahContext from '../../cahContext';
 import Login from '../../components/Login/Login';
-import Game from '../../components/Game/Game';
+import Register from '../../components/Register/Register';
 
 class GameRoom extends Component {
   constructor(props) {
     super(props)
     this.state = {
-       
+       isAuth: true,
     }
   }
   
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        auth: false,
-      })
-    }, 1000);
-  }
+  // componentDidMount() {
+  //   setTimeout(() => {
+  //     this.setState({
+  //       auth: false,
+  //     })
+  //   }, 1000);
+  // }
 
   updateAuth() {
     this.setState({
       auth: !this.state.auth,
     })
   }
-  renderLoginOrGame() {
-    if (!this.state.auth) {
+  renderLoginOrRegister() {
+    if (!this.state.isAuth) {
       return (
-        <Login auth={this.updateAuth}/>
+        <Register auth={this.updateAuth}/>
       )
     } 
-    return <Game />
+    return <Login />
   }
 
   render() {
     return (
       <main className="GameRoom">
-        {this.renderLoginOrGame()}
+        {this.renderLoginOrRegister()}
       </main>
     )
   }

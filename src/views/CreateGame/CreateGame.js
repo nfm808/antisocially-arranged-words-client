@@ -90,9 +90,53 @@ class CreateGame extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const availableRooms = ['123', '456', '789']
-    const mockRoom = availableRooms[Math.floor(Math.random() * availableRooms.length)]
-    this.props.history.push(`/game/${mockRoom}`)
+    const idOptions = ['123', '234', '456']
+    const id = idOptions[Math.floor(Math.random() * idOptions.length)]
+    const url = `${process.env.REACT_APP_API_BASE_URL}/gameroom`
+    const data = {
+      id: id,
+      gameroom_name: this.state.name,
+      password: this.state.password,
+      "used_black_cards": [],
+      "used_white_cards": [],
+      "czar": 1,
+      "current_black_card": null,
+      "answer_choices": [],
+      "winning_choice": null,
+      "player_1_id": 1,
+      "player_1_cards": [],
+      "player_1_points": 0,
+      "player_2_id": 2,
+      "player_2_cards": [],
+      "player_2_points": 0,
+      "player_3_id": 3,
+      "player_3_cards": [],
+      "player_3_points": 0,
+      "player_4_id": 4,
+      "player_4_cards": [],
+      "player_4_points": 0,
+      "player_5_id": 5,
+      "player_5_cards": [],
+      "player_5_points": 0
+    }
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }
+    fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('server error: try again later')
+        }
+        return res;
+      })
+      .then(res => res.json())
+      .then(x => {
+        this.props.history.push(`/${data.id}`)
+      })
   }
 
   render() {
