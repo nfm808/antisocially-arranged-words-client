@@ -14,8 +14,10 @@ class Game extends Component {
        usedWhiteCards: [],
        usedBlackCards: [],
        answerChoices: [],
+       winningAnswerChoice: null,
        currentBlackCard: {},
-       reveal: false,
+       answerChoiceSubmitted: false,
+       revealCardInfo: false,
        players: [
          {
           id: null,
@@ -72,7 +74,32 @@ class Game extends Component {
       hand: user.cards,
       usedBlackCards: usedBlack,
       usedWhiteCards: usedWhite,
-      answerChoices: [{id: 2, text: "What don't you want to find?", playerId: 3, playerName: 'player three'}],
+      answerChoices: [
+        {
+          id: 2,
+          text: "What don't you want to find?",
+          playerId: 3,
+          playerName: 'player three'
+        },
+        {
+          id: 12,
+          text: "Test card 2",
+          playerId: 2,
+          playerName: 'player two'
+        },
+        {
+          id: 22,
+          text: "What test",
+          playerId: 4,
+          playerName: 'player four'
+        },
+        {
+          id: 32,
+          text: "find?",
+          playerId: 5,
+          playerName: 'player five'
+        }
+      ],
       currentBlackCard: adjusted,
       players: players
     })
@@ -99,29 +126,28 @@ class Game extends Component {
       })
   }
   
-  handleCardSelect(e) {
-    console.log(`card with ${e} selected`)
+  handleCardSelect(card) {
+    console.log(`card with ${card.playerId} selected`)
   }
 
   renderWhiteCards() {
-    const {isCzar, answerChoices, hand, players, reveal} = this.state;
-    console.log(reveal)
+    const {isCzar, answerChoices, winningAnswerChoice, hand, players, revealCardInfo} = this.state;
     if (isCzar && answerChoices.length < 4) {
       return answerChoices.map((card, i) => (
-        <WhiteCard key={i} blank={true} />
+        <WhiteCard key={i} blank />
       ))
     }
-    if (isCzar && answerChoices.length === 5 && reveal) {
+    if (isCzar && answerChoices.length === 4 && !revealCardInfo) {
       return answerChoices.map(card => (
         <WhiteCard 
           key={card.id}
-          partial={!reveal}
+          partial
           card={card} 
           handleCardSelect={this.handleCardSelect}  
         />
       ))
     }
-    if (isCzar === false) {
+    if (!isCzar) {
       return hand.map(card => (
         <WhiteCard 
           key={card.id}

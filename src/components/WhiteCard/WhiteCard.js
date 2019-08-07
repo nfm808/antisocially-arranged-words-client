@@ -14,13 +14,14 @@ export default function WhiteCard(props) {
     return (
       <div className="WhiteCard">
         <h5 className="WhiteCard--text">{card.text}</h5>
-        <button type='button' onClick={handleCardSelect}>Submit</button>
+        <button type='button' onClick={() => handleCardSelect(card)}>Submit</button>
       </div>
     )
   }
   return (
     <div className="WhiteCard">
       <h5 className="WhiteCard--text">{card.text}</h5>
+      <p className="WhiteCard--text">{card.playerName}</p>
     </div>
   )
 }
