@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import BlackCard from '../BlackCard/BlackCard';
 import cahContext from '../../cahContext';
+import WhiteCard from '../WhiteCard/WhiteCard';
 
 class Game extends Component {
   static contextType = cahContext;
@@ -8,12 +9,13 @@ class Game extends Component {
     super(props)
   
     this.state = {
-       isCzar: true,
+       isCzar: null,
        hand: [],
        usedWhiteCards: [],
        usedBlackCards: [],
        answerChoices: [],
        currentBlackCard: {},
+       reveal: false,
        players: [
          {
           id: null,
@@ -44,7 +46,7 @@ class Game extends Component {
     players.push(this.createPlayer(data.player_5_id, data.player_5_name, data.player_5_isCzar, data.player_5_points, data.player_5_cards))
     return players;
   }
-  addPlayerNameToCard(card, userId, players) {
+  addPlayerInfoToCard(card, userId, players) {
     let playerToAdd = players.filter(x => x.id === userId)[0]
     delete playerToAdd.cards
     delete playerToAdd.isCzar
@@ -57,18 +59,20 @@ class Game extends Component {
     let isCzar = false;
     const currentPlayer = this.props.match.params.user.split('_').join(' ')
     let user = players.filter(user => user.playerName === currentPlayer)[0]
-    if (user.id === data.czar) {
+    if (user.playerId === data.czar) {
       isCzar = true;
     }
     const usedWhite = players.map(player => player.cards).flat()
     const usedBlack = data.used_black_cards.push(data.currentBlackCard)
     const currentBlack = this.context.blackCards.filter(x => x.id === data.current_black_card)[0]
-    const adjusted = this.addPlayerNameToCard(currentBlack, user.id, players)
+    const adjusted = this.addPlayerInfoToCard(currentBlack, user.id, players)
+    const answers = this.context.whiteCards.filter(x => data.answer_choices.includes(x.id))
     this.setState({
       isCzar: isCzar,
       hand: user.cards,
       usedBlackCards: usedBlack,
       usedWhiteCards: usedWhite,
+      answerChoices: [{id: 2, text: "What don't you want to find?", playerId: 3, playerName: 'player three'}],
       currentBlackCard: adjusted,
       players: players
     })
@@ -95,6 +99,39 @@ class Game extends Component {
       })
   }
   
+  handleCardSelect(e) {
+    console.log(`card with ${e} selected`)
+  }
+
+  renderWhiteCards() {
+    const {isCzar, answerChoices, hand, players, reveal} = this.state;
+    console.log(reveal)
+    if (isCzar && answerChoices.length < 4) {
+      return answerChoices.map((card, i) => (
+        <WhiteCard key={i} blank={true} />
+      ))
+    }
+    if (isCzar && answerChoices.length === 5 && reveal) {
+      return answerChoices.map(card => (
+        <WhiteCard 
+          key={card.id}
+          partial={!reveal}
+          card={card} 
+          handleCardSelect={this.handleCardSelect}  
+        />
+      ))
+    }
+    if (isCzar === false) {
+      return hand.map(card => (
+        <WhiteCard 
+          key={card.id}
+          card={card} 
+          handleCardSelect={this.handleCardSelect}
+        />
+      ))
+    }
+  }
+
   render() {
     const {currentBlackCard} = this.state;
     return (
@@ -105,6 +142,7 @@ class Game extends Component {
         <BlackCard 
           card={currentBlackCard}
         />
+        {this.renderWhiteCards()}
       </main>
     )
   }
