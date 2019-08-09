@@ -27,6 +27,7 @@ class Game extends Component {
          }
        ],
     }
+    this.handleWinningCardSelect = this.handleWinningCardSelect.bind(this)
   }
   createPlayer(id, playerName, isCzar, score, cards) {
     const player = {
@@ -126,40 +127,64 @@ class Game extends Component {
       })
   }
   
-  handleCardSelect(card) {
-    console.log(`card with ${card.playerId} selected`)
+  handleWinningCardSelect(card) {
+    this.setState({
+      winningAnswerChoice: card,
+      revealCardInfo: !this.state.revealCardInfo
+    })
   }
 
-  renderWhiteCards() {
-    const {isCzar, answerChoices, winningAnswerChoice, hand, players, revealCardInfo} = this.state;
-    if (isCzar && answerChoices.length < 4) {
+  renderCzarWhiteCards() {
+    const { answerChoices, winningAnswerChoice, revealCardInfo} = this.state;
+    if (answerChoices.length < 4) {
       return answerChoices.map((card, i) => (
         <WhiteCard key={i} blank />
       ))
     }
-    if (isCzar && answerChoices.length === 4 && !revealCardInfo) {
+    if (answerChoices.length === 4 && !revealCardInfo) {
       return answerChoices.map(card => (
         <WhiteCard 
           key={card.id}
           partial
           card={card} 
-          handleCardSelect={this.handleCardSelect}  
+          handleCardSelect={this.handleWinningCardSelect}  
         />
       ))
     }
-    if (!isCzar) {
+    if (revealCardInfo) {
+      return (
+        <>
+          <WhiteCard 
+            card={winningAnswerChoice}
+          />
+          {answerChoices.filter(card => card.id !== winningAnswerChoice.id)
+                  .map(card => (
+                    <WhiteCard 
+                      key={card.id}
+                      card={card}
+                    />
+                  ))
+          }
+        </>
+      )
+    }
+  }
+  renderPlayerWhiteCards() {
+    const { answerChoices, winningAnswerChoice, hand, players, revealCardInfo} = this.state;
+    const playerSubmittedAnswer = answerChoices.
+    if (answerChoices.length < 4) {
       return hand.map(card => (
         <WhiteCard 
           key={card.id}
           card={card} 
-          handleCardSelect={this.handleCardSelect}
+          handleCardSelect={this.handleAnswerCardSelect}
         />
       ))
     }
-  }
 
+  }
   render() {
-    const {currentBlackCard} = this.state;
+    const {isCzar, revealCardInfo, currentBlackCard} = this.state;
     return (
       <main className='Game'>
         <header>
@@ -168,7 +193,10 @@ class Game extends Component {
         <BlackCard 
           card={currentBlackCard}
         />
-        {this.renderWhiteCards()}
+        {!isCzar ? this.renderPlayerWhiteCards()
+                  : this.renderCzarWhiteCards()  
+        }
+        {turnEnd && <button></button>}
       </main>
     )
   }
