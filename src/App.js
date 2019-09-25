@@ -8,8 +8,10 @@ import Error404 from './components/Error404/Error404';
 import Rules from './views/Rules/Rules.js';
 import CreateGame from './views/CreateGame/CreateGame';
 import Game from './components/Game/Game';
+import Register from './components/Register/Register';
 
 class App extends Component {
+  static contextType = CahContext;
   state = {
     isLocal: !localStorage.getItem("decks") ? false : true,
     blackCards: false,
@@ -65,6 +67,11 @@ class App extends Component {
           />
           <Route 
             exact
+            path='/game/:roomId/register'
+            component={Register}
+          />
+          <Route 
+            
             path='/game/:roomId'
             component={GameRoom}
           />

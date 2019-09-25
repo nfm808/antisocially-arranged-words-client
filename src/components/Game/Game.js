@@ -10,6 +10,7 @@ class Game extends Component {
   
     this.state = {
        isCzar: null,
+       user: {},
        hand: [],
        usedWhiteCards: [],
        usedBlackCards: [],
@@ -17,7 +18,9 @@ class Game extends Component {
        winningAnswerChoice: null,
        currentBlackCard: {},
        answerChoiceSubmitted: false,
+       answerCardSubmitted: {},
        revealCardInfo: false,
+       turnEnd: false,
        players: [
          {
           id: null,
@@ -28,6 +31,7 @@ class Game extends Component {
        ],
     }
     this.handleWinningCardSelect = this.handleWinningCardSelect.bind(this)
+    this.handleAnswerCardSelect = this.handleAnswerCardSelect.bind(this)
   }
   createPlayer(id, playerName, isCzar, score, cards) {
     const player = {
@@ -50,7 +54,7 @@ class Game extends Component {
     return players;
   }
   addPlayerInfoToCard(card, userId, players) {
-    let playerToAdd = players.filter(x => x.id === userId)[0]
+    let playerToAdd = players.filter(x => x.playerId === userId)[0]
     delete playerToAdd.cards
     delete playerToAdd.isCzar
     delete playerToAdd.score
@@ -61,46 +65,24 @@ class Game extends Component {
     const players = this.createPlayersArray(data);
     let isCzar = false;
     const currentPlayer = this.props.match.params.user.split('_').join(' ')
+    const currentCzar = players.filter(user => user.playerId === data.czar)[0]
     let user = players.filter(user => user.playerName === currentPlayer)[0]
+    const userHand = this.context.whiteCards.filter(card => user.cards.includes(card.id));
     if (user.playerId === data.czar) {
       isCzar = true;
     }
     const usedWhite = players.map(player => player.cards).flat()
     const usedBlack = data.used_black_cards.push(data.currentBlackCard)
     const currentBlack = this.context.blackCards.filter(x => x.id === data.current_black_card)[0]
-    const adjusted = this.addPlayerInfoToCard(currentBlack, user.id, players)
-    const answers = this.context.whiteCards.filter(x => data.answer_choices.includes(x.id))
+    const adjusted = this.addPlayerInfoToCard(currentBlack, currentCzar.playerId, players)
+    const answers = data.answer_choices.length === 0 ? [] : this.context.whiteCards.filter(x => data.answer_choices.includes(x.id))
     this.setState({
       isCzar: isCzar,
-      hand: user.cards,
+      user: user,
+      hand: userHand,
       usedBlackCards: usedBlack,
       usedWhiteCards: usedWhite,
-      answerChoices: [
-        {
-          id: 2,
-          text: "What don't you want to find?",
-          playerId: 3,
-          playerName: 'player three'
-        },
-        {
-          id: 12,
-          text: "Test card 2",
-          playerId: 2,
-          playerName: 'player two'
-        },
-        {
-          id: 22,
-          text: "What test",
-          playerId: 4,
-          playerName: 'player four'
-        },
-        {
-          id: 32,
-          text: "find?",
-          playerId: 5,
-          playerName: 'player five'
-        }
-      ],
+      answerChoices: answers,
       currentBlackCard: adjusted,
       players: players
     })
@@ -125,17 +107,39 @@ class Game extends Component {
       .then(data => {
         this.setInitialState(data)
       })
+      .catch(err => console.error(err))
   }
   
   handleWinningCardSelect(card) {
+    const newCzar = this.state.players.indexOf(player => 
+      player.playerId === card.playerId
+    )
+    console.log(newCzar)
     this.setState({
       winningAnswerChoice: card,
-      revealCardInfo: !this.state.revealCardInfo
+      revealCardInfo: !this.state.revealCardInfo,
     })
   }
+  endTurn() {
+    this.setState({
+      turnEnd: !this.state.turnEnd,
 
+    })
+  }
+  handleAnswerCardSelect(card) {
+    console.log('card', card)
+    const { user, players } = this.state
+    console.log('user', 'players', user, players)
+    const submittedAnswer = this.addPlayerInfoToCard(card, user.playerId, players )
+    console.log('submittedAns', submittedAnswer)
+    this.setState({
+      answerChoiceSubmitted:  submittedAnswer,
+      answerCardSubmitted: true
+    })
+  }
   renderCzarWhiteCards() {
     const { answerChoices, winningAnswerChoice, revealCardInfo} = this.state;
+    console.log('renderczarwhitecards()', this.state)
     if (answerChoices.length < 4) {
       return answerChoices.map((card, i) => (
         <WhiteCard key={i} blank />
@@ -165,26 +169,45 @@ class Game extends Component {
                     />
                   ))
           }
+          <button onClick={() => this.endTurn}>End Turn</button>
         </>
       )
     }
   }
   renderPlayerWhiteCards() {
-    const { answerChoices, winningAnswerChoice, hand, players, revealCardInfo} = this.state;
-    const playerSubmittedAnswer = answerChoices.
-    if (answerChoices.length < 4) {
+    const { answerChoices, answerChoiceSubmitted, winningAnswerChoice, players, hand, revealCardInfo} = this.state;
+    console.log('renderplayerwhitecards state', this.state)
+    const currentPlayer = this.props.match.params.user.split('_').join(' ')
+    let user = players.filter(user => user.playerName === currentPlayer)[0]
+    if (!answerChoiceSubmitted) {
       return hand.map(card => (
         <WhiteCard 
           key={card.id}
-          card={card} 
+          card={card}
+          partial
           handleCardSelect={this.handleAnswerCardSelect}
         />
       ))
     }
-
+    if (answerChoiceSubmitted) {
+      return (
+      <>
+        <WhiteCard 
+          selected
+          card={this.state.answerCardSubmitted}
+        />
+        {hand.map(card => (
+          <WhiteCard 
+            key={card.id}
+            card={card} 
+          />
+      ))}
+      </>
+    )}
   }
   render() {
-    const {isCzar, revealCardInfo, currentBlackCard} = this.state;
+    const {isCzar, revealCardInfo, currentBlackCard, turnEnd} = this.state;
+    console.log('render() state', this.state)
     return (
       <main className='Game'>
         <header>
