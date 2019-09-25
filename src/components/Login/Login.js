@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import ValidationMessage from '../ValidationMessage/ValidationMessage';
+import { authenticationService } from '../../_helpers/authentication.service';
 
 class Login extends Component {
   constructor(props) {

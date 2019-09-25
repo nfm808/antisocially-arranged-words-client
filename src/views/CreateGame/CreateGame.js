@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CreateGame.css';
 import ValidationMessage from '../../components/ValidationMessage/ValidationMessage';
+import { authenticationService } from '../../_helpers/authentication.service';
 
 class CreateGame extends Component {
   state = {
@@ -146,6 +147,8 @@ class CreateGame extends Component {
     } = this.state
     const errors = (nameValid && passwordValid && repeatPasswordValid) 
                   ? true :false
+    const currentUser = authenticationService.currentUserValue;
+    
     return (
       <main className="CreateGame">
         <header className="CreateGame--header BlackCard">
@@ -205,7 +208,7 @@ class CreateGame extends Component {
           Create Game
         </button>
       </main>
-    )
+      )
   }
 }
 

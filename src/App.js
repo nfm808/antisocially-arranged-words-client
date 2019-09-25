@@ -9,6 +9,7 @@ import Rules from './views/Rules/Rules.js';
 import CreateGame from './views/CreateGame/CreateGame';
 import Game from './components/Game/Game';
 import Register from './components/Register/Register';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 class App extends Component {
   static contextType = CahContext;
@@ -62,11 +63,6 @@ class App extends Component {
           />
           <Route 
             exact
-            path='/create-game'
-            component={CreateGame}
-          />
-          <Route 
-            exact
             path='/game/:roomId/register'
             component={Register}
           />
@@ -94,6 +90,10 @@ class App extends Component {
     return (
       <CahContext.Provider value={contextValue}>
       <div className='App'>
+        <PrivateRoute 
+          path='/create-game'
+          component={CreateGame}
+        />
         {this.renderViewRoutes()}
       </div>
       </CahContext.Provider>
