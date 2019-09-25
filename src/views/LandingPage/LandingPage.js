@@ -4,7 +4,7 @@ import './LandingPage.css';
 import Nav from '../../components/Nav/Nav';
 import Login from '../../components/Login/Login';
 
-export default function LandingPage() {
+export default function LandingPage(props) {
   return (
     <main className='LandingPage'>
       <h1>Antisocially Arranged Words</h1>
@@ -14,7 +14,10 @@ export default function LandingPage() {
           {to: 'rules', name: 'Rules and Such'}
         ]}  
       />
-      <Login />
+      <Login 
+        history={props.history}
+        location={props.location}
+      />
       <CardDemo />     
     </main>
   )

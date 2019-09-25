@@ -17,22 +17,17 @@ class Login extends Component {
     }
   }
   handleSubmit = (e) => {
-    const { username, password } = this.state
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username, password})
-    }
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/user`, options)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(res.message)
+    e.preventDefault();
+    const { username, password } = this.state;
+    authenticationService.login(username, password)
+      .then(
+        user => {
+          const { from } = this.props.location.state || { from: {
+            pathname: "/"
+          }};
+          this.props.history.push(from);
         }
-      })
-      .then(res => console.log(res))
-      .catch(err => console.error(err))
+      )
   }
   updateName = (e) =>  {
     const value = e.target.value
@@ -76,7 +71,7 @@ class Login extends Component {
               />
             </section>
           </form>
-          <button type="submit" onClick={() => this.handleSubmit()} disabled={isSubmitting} >Log In</button>
+          <button type="submit" onClick={(e) => this.handleSubmit(e)} disabled={isSubmitting} >Log In</button>
           <p>Or Register <button type="button" onClick={() => this.props.history.push('/')} >Here</button></p>
           {status && 
             <div className="">{status}</div>
