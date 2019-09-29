@@ -47,6 +47,28 @@ class App extends Component {
       })
     }
   }
+  createGame = () => {
+    const url = `${process.env.REACT_APP_API_BASE_URL}/create-game`
+    const options = {
+      method: 'POST',
+      header: {
+        'Authorization': 'Bearer fake-jwt-token',
+        'Content-Type': 'application/json'
+      }
+    }
+      fetch(url, options)
+        .then(res => {
+          if(!res.ok) {
+            throw new Error(`mistakes were made`)
+          }
+          return res;
+        })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => console.log(err))
+  }
   renderViewRoutes() {
     return (
       <>
@@ -60,6 +82,10 @@ class App extends Component {
             exact
             path='/rules'
             component={Rules}
+          />
+          <PrivateRoute 
+            path='/create-game'
+            component={CreateGame}
           />
           <Route 
             exact
@@ -79,23 +105,21 @@ class App extends Component {
           <Route 
             component={Error404}
           />
-        </Switch>
+        </Switch>  
       </>
     )}
   render() {
     const contextValue = {
       blackCards: this.state.blackCards,
       whiteCards: this.state.whiteCards,
+      createGame: this.createGame
     }
     return (
       <CahContext.Provider value={contextValue}>
-      <div className='App'>
-        <PrivateRoute 
-          path='/create-game'
-          component={CreateGame}
-        />
-        {this.renderViewRoutes()}
-      </div>
+        <div className='App'>
+          
+          {this.renderViewRoutes()}
+        </div>
       </CahContext.Provider>
     )
   }

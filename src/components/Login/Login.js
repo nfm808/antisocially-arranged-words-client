@@ -24,7 +24,7 @@ class Login extends Component {
       .then(
         user => {
           const { from } = this.props.location.state || { from: {
-            pathname: "/"
+            pathname: "/create-game"
           }};
           this.props.history.push(from);
         }

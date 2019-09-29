@@ -13,6 +13,7 @@ const CahContext = React.createContext({
   winningAnswer: [],
   updateUsedCards: () => {},
   updateCurrentHand: () => {},
+  createGame: () => {}
 })
 
 export default CahContext;

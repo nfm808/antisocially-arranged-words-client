@@ -24,6 +24,15 @@ export function configureFakeBackend() {
           if (!isLoggedIn) return unauthorised();
           return ok(users);
         }
+
+        if (url.endsWith(`/create-game`) && opts.method === 'POST') {
+          console.log('/create-game fetched')
+          const roomId = 'test-room'
+          const params = JSON.parse(opts.body);
+          const urls = Object.values(params).map(x => `localhost:3001/game/${roomId}/${x}`)
+           
+          return resolve(urls)
+        }
         
         realFetch(url, opts).then(response => resolve(response));
 

@@ -8,9 +8,23 @@ const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('
 export const authenticationService = {
   login,
   logout,
+  createGame,
   currentUser: currentUserSubject.asObservable(),
   get currentUserValue () { return currentUserSubject.value }
 };
+
+function createGame(players) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer fake-jwt-token'
+    },
+    body: JSON.stringify(players)
+  };
+  return fetch('/create-game', requestOptions)
+    
+}
 
 function login(username, password) {
   const requestOptions = {
