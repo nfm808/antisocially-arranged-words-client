@@ -1,4 +1,5 @@
 import { ok } from "assert";
+import CARDS from '../CARDS';
 
 export function configureFakeBackend() {
   let users = [{ id: 1, username: 'test', password: 'test' }, { id: 2, username: 'test2', password: 'test2' }];
@@ -9,6 +10,10 @@ export function configureFakeBackend() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         
+        if (url.endsWith('/cards') && opts.method === 'GET') {
+          return resolve(CARDS);
+        }
+
         if (url.endsWith(`/users/authenticate`) && opts.method === 'POST') {
           const params = JSON.parse(opts.body);
           const user = users.find(x => x.username === params.username && x.password === params.password);
@@ -26,7 +31,6 @@ export function configureFakeBackend() {
         }
 
         if (url.endsWith(`/create-game`) && opts.method === 'POST') {
-          console.log('/create-game fetched')
           const roomId = 'test-room'
           const params = JSON.parse(opts.body);
           const urls = Object.values(params).map(x => `localhost:3001/game/${roomId}/${x}`)

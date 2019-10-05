@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './CreateGame.css';
-import ValidationMessage from '../../components/ValidationMessage/ValidationMessage';
 import { authenticationService } from '../../_helpers/authentication.service';
 
 class CreateGame extends Component {
@@ -49,23 +48,23 @@ class CreateGame extends Component {
     return (
       <form className="CreateGame--form" onSubmit={(e) => this.handleSubmit(e)}>
         <div className="form--group">
-          <label htmlFor="p1name">P 1 Name: </label>
+          <label htmlFor="p1name">P 1 Name: [ user-1 ]</label>
           <input id="p1name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
         </div>
         <div className="form--group">
-          <label htmlFor="p2name">P 2 Name: </label>
+          <label htmlFor="p2name">P 2 Name: [ user-2 ]</label>
           <input id="p2name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
         </div>
         <div className="form--group">
-          <label htmlFor="p3name">P 3 Name: </label>
+          <label htmlFor="p3name">P 3 Name: [ user-3 ]</label>
           <input id="p3name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
         </div>
         <div className="form--group">
-          <label htmlFor="p4name">P 4 Name: </label>
+          <label htmlFor="p4name">P 4 Name: [ user-4 ]</label>
           <input id="p4name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
         </div>
         <div className="form--group">
-          <label htmlFor="p5name">P 5 Name: </label>
+          <label htmlFor="p5name">P 5 Name: [ user-5 ]</label>
           <input id="p5name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
         </div>
         <button 

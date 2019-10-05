@@ -22,21 +22,24 @@ class App extends Component {
   componentDidMount() {
     if (!this.state.isLocal) {
       const url = `${process.env.REACT_APP_API_BASE_URL}/cards`
-      fetch(url)
+      const options = {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer fake-jwt-token',
+          'Content-Type': 'application/json'
+        }
+      }
+      fetch(url, options)
         .then(res => {
-          if(!res.ok) {
-            throw new Error(`mistakes were made`)
-          }
           return res;
         })
-        .then(res => res.json())
         .then(data => {
           localStorage.setItem("decks", "true");
-          localStorage.setItem("blackCards", JSON.stringify(data[0].black_cards))
-          localStorage.setItem("whiteCards", JSON.stringify(data[0].white_cards))
+          localStorage.setItem("blackCards", JSON.stringify(data.blackCards))
+          localStorage.setItem("whiteCards", JSON.stringify(data.whiteCards))
           this.setState({
-            blackCards: data[0].black_cards,
-            whiteCards: data[0].white_cards
+            blackCards: data.blackCards,
+            whiteCards: data.whiteCards
           })
         })
         .catch(err => console.log(err.message))
