@@ -2,7 +2,33 @@ import { ok } from "assert";
 import CARDS from '../CARDS';
 
 export function configureFakeBackend() {
-  let users = [{ id: 1, username: 'test', password: 'test' }, { id: 2, username: 'test2', password: 'test2' }];
+  let users = [
+    { 
+      id: 1, 
+      username: 'user-1', 
+      password: 'test' 
+    },
+    { 
+      id: 2, 
+      username: 'user-2', 
+      password: 'test' 
+    },
+    { 
+      id: 3, 
+      username: 'user-3', 
+      password: 'test' 
+    },
+    { 
+      id: 4, 
+      username: 'user-4', 
+      password: 'test' 
+    },
+    { 
+      id: 5, 
+      username: 'user-5', 
+      password: 'test' 
+    } 
+  ];
   let realFetch = window.fetch;
   window.fetch = function(url, opts) {
     const isLoggedIn = opts.headers['Authorization'] === 'Bearer fake-jwt-token';
@@ -31,14 +57,20 @@ export function configureFakeBackend() {
         }
 
         if (url.endsWith(`/create-game`) && opts.method === 'POST') {
-          const roomId = 'test-room'
           const params = JSON.parse(opts.body);
-          const urls = Object.values(params).map(x => `localhost:3001/game/${roomId}/${x}`)
+          // localhost:3001/game/test-room/luxurysandbox@gmail.com
+          const urls = Object.values(params).map(x => (x.includes('@')) ? '' : `localhost:3001/game/test-room/${x}`)
            
           return resolve(urls)
         }
+
+        users.map(user => {
+        if (url.endsWith(`/game/test-room/${user.username}`)) {
+
+        }})
         
         realFetch(url, opts).then(response => resolve(response));
+
 
         function ok(body) { 
           resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(body)) })

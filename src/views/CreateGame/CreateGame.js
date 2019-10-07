@@ -15,7 +15,7 @@ class CreateGame extends Component {
     const values = Object.values(players).filter(x => x.length > 1);
     let isValid = true
 
-    if (keys.length < 5 || values.length < 5) {
+    if (keys.length < 10 || values.length < 10) {
       isValid = !isValid
     } else {
       isValid = isValid
@@ -25,6 +25,12 @@ class CreateGame extends Component {
   }
 
   handleNameUpdate = (id, value) => {
+    this.setState({
+      players: {...this.state.players, [id]: value}
+    }, this.validateForm())
+  }
+
+  handleEmailUpdate = (id, value) => {
     this.setState({
       players: {...this.state.players, [id]: value}
     }, this.validateForm())
@@ -42,31 +48,28 @@ class CreateGame extends Component {
       body: JSON.stringify(body)
     };
     authenticationService.createGame(body)
-    .then(response => this.setState({urls: response, hasLinks: true})) 
+    .then(response => {
+      const url = response.filter(x => x !== '');
+      this.setState({urls: url, hasLinks: true})
+    }) 
   }
+
   renderForm = () => {
+    const arr = [1, 2, 3, 4, 5];
     return (
       <form className="CreateGame--form" onSubmit={(e) => this.handleSubmit(e)}>
-        <div className="form--group">
-          <label htmlFor="p1name">P 1 Name: [ user-1 ]</label>
-          <input id="p1name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
-        </div>
-        <div className="form--group">
-          <label htmlFor="p2name">P 2 Name: [ user-2 ]</label>
-          <input id="p2name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
-        </div>
-        <div className="form--group">
-          <label htmlFor="p3name">P 3 Name: [ user-3 ]</label>
-          <input id="p3name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
-        </div>
-        <div className="form--group">
-          <label htmlFor="p4name">P 4 Name: [ user-4 ]</label>
-          <input id="p4name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
-        </div>
-        <div className="form--group">
-          <label htmlFor="p5name">P 5 Name: [ user-5 ]</label>
-          <input id="p5name" type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
-        </div>
+        {arr.map(user => 
+          (
+            <>
+              <div key={user} className="form--group">
+                <label htmlFor={`p${user}name`}>Player {user} Name: [ user- {user} ]</label>
+                <input id={`p${user}name`} type='text' onChange={(e) => this.handleNameUpdate(e.target.id, e.target.value)} />
+                <label htmlFor={`p${user}email`}>Player {user} Email: [ user- {user} ]</label>
+                <input id={`p${user}email`} type='email' onChange={(e) => this.handleEmailUpdate(e.target.id, e.target.value)} />
+              </div>
+            </> 
+          )
+        )}
         <button 
           type="submit" 
           aria-label="create a game" 
@@ -80,7 +83,7 @@ class CreateGame extends Component {
   renderLinks = () => {
     const {players, urls} = this.state
       return urls.map((url, i) =>  ( 
-        <div key={url}>
+        <div key={i}>
           <p>{players[Object.keys(players).filter(x=> x === `p${i + 1}name`)[0]]}</p>
           <p>{url}</p>
         </div>
